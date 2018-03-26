@@ -1,0 +1,18 @@
+﻿{
+  "components": [
+    {
+      "type": "WorkData.Util.Common.TopSelfExtensions.HostConfig,WorkData.Util.Common",
+      "injectProperties": true,
+      "properties": {
+        "ServiceName": "Redis键空间回调",
+        "ServiceDescription": "借助Redis键空间回调，实现定时业务",
+        "ServiceDisplayName": "借助Redis键空间回调，实现定时业务",
+        "InstanceName": "WrokData.RedisKeySpace",
+        "RunAs": 0,
+        "StartMode": 0
+        //"Password": "",
+        //"UserName": ""
+      }
+    }
+  ]
+}
