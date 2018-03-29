@@ -1,22 +1,21 @@
 ﻿// ------------------------------------------------------------------------------
 // Copyright  吴来伟个人 版权所有。 
 // 项目名：WorkData.Service.Core
-// 文件名：Insert.cs
-// 创建标识：吴来伟 2018-03-22 15:08
+// 文件名：MessageType.cs
+// 创建标识：吴来伟 2018-03-26 17:08
 // 创建描述：
 //  
-// 修改标识：吴来伟2018-03-22 15:08
+// 修改标识：吴来伟2018-03-26 17:08
 // 修改描述：
 //  ------------------------------------------------------------------------------
-
-using WorkData.Service.Core.Settings;
-
 namespace WorkData.Service.Core.Entity
 {
-    public class Insert: ICallBack
+    /// <summary>
+    /// 消息类型
+    /// </summary>
+    public enum MessageType
     {
-        public int Id { get; set; }
-
-        public string Title { get; set; }
+        定时回调=1,
+        直接执行=2
     }
 }

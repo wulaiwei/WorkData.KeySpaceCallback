@@ -54,6 +54,7 @@ namespace WorkData.Service
                     s.WhenStarted((service, control) => service.Start());
                     s.WhenStopped((service, control) => service.Stop());
                 });
+
             });
         }
     }

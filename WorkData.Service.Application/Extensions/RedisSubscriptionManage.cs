@@ -36,55 +36,16 @@ namespace WorkData.Service.Application.Extensions
         /// <summary>
         ///     订阅
         /// </summary>
-        public void CreateRedisSubscription(Message message)
+        public IWorkDataSubscription CreateRedisSubscription(Message message)
         {
-            using (var redisClient = _redisService.GetClient())
+            switch (message.MessageType)
             {
-                try
-                {
-                    //判断重启之前是否redis是否已释放过期数据，如果过期当前时间添加30秒重新触发事件
-                    var data = redisClient.Get<string>($"{message.Key}");
-
-                    if (string.IsNullOrEmpty(data))
-                    {
-                        redisClient.Set(
-                            $"{message.Key}", $"{message.Key}", DateTime.Now.AddSeconds(5));
-                    }
-
-                    //创建订阅
-                    var subscription = redisClient.CreateSubscription();
-
-                    //接收消息处理Action
-                    subscription.OnMessage = (channel, msg) =>
-                    {
-                        var baseImplType = typeof(DomainServiceProxy<>);
-                        var genericRepositoryType = baseImplType
-                            .MakeGenericType(message.DomainService);
-                        var proxy = _iocManager.Resolve(genericRepositoryType) as dynamic;
-
-                        var request = JsonConvert.DeserializeObject
-                            (message.DomainServiceRequest, message.DomainService) as dynamic;
-
-                        proxy.Execute(request, message);
-                    };
-
-                    //订阅事件处理
-                    subscription.OnSubscribe = channel => { };
-
-                    //取消订阅事件处理
-                    subscription.OnUnSubscribe = a =>
-                    {
-                        //subscription.Dispose();
-                    };
-
-                    //__keyspace@0__ 为固定格式 0代表DB数据库的位置db0
-                    //订阅频道
-                    subscription.SubscribeToChannels($"__keyspace@0__:{message.Key}");
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                }
+                case MessageType.定时回调:
+                    return new TimingWorkDataSubscription(_iocManager, _redisService);
+                case MessageType.直接执行:
+                    return new ImmediateSubscription(_iocManager, _redisService);
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
     }

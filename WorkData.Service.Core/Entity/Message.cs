@@ -28,6 +28,11 @@ namespace WorkData.Service.Core.Entity
         public string Key { get; set; }
 
         /// <summary>
+        /// 消息类型
+        /// </summary>
+        public MessageType MessageType { get; set; }
+
+        /// <summary>
         /// 服务
         /// </summary>
         public Type DomainService { get; set; }

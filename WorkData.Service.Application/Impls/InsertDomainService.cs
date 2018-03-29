@@ -10,6 +10,7 @@
 //  ------------------------------------------------------------------------------
 
 using WorkData.Service.Application.Dependency;
+using WorkData.Service.Core.Bussiness;
 using WorkData.Service.Core.Entity;
 using WorkData.Service.Core.Settings;
 using WorkData.Util.Common.Logs;
@@ -23,7 +24,7 @@ namespace WorkData.Service.Application.Impls
     {
         public override HandlingResult Execute(Insert message)
         {
-            LoggerHelper.SystemLog.Error(message.Id); //(message.Id);
+            LoggerHelper.SystemLog.Error($"insert:{message.Id}"); 
             return null;
         }
     }

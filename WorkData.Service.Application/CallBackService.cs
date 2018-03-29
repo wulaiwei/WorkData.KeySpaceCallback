@@ -18,6 +18,7 @@ using Newtonsoft.Json;
 using WorkData.Dependency;
 using WorkData.Service.Application.Dependency;
 using WorkData.Service.Application.Extensions;
+using WorkData.Service.Core.Bussiness;
 using WorkData.Service.Core.Entity;
 using WorkData.Util.Common.Logs;
 using WorkData.Util.Redis.Entity;
@@ -40,6 +41,7 @@ namespace WorkData.Service.Application
         /// </summary>
         private readonly BaseRedisServiceManager _baseRedisServiceManager;
         private readonly RedisSubscriptionManage _redisSubscriptionManage;
+
         public CallBackService(BaseRedisServiceManager baseRedisServiceManager, RedisSubscriptionManage redisSubscriptionManage)
         {
             _baseRedisServiceManager = baseRedisServiceManager;
@@ -50,28 +52,6 @@ namespace WorkData.Service.Application
         /// </summary>
         public bool Start()
         {
-            for (var i = 0; i < 10000; i++)
-            {
-                var message = new RedisQueue<Message>
-                {
-                    Key = "RedisKepSpaceQueue",
-                    Entity = new Message
-                    {
-                        Key = Guid.NewGuid().ToString(),
-                        DomainService = typeof(Insert),
-                        DomainServiceRequest = JsonConvert.SerializeObject(new Insert
-                        {
-                            Id = 1,
-                            Title = DateTime.Now.ToLongDateString()
-                        })
-                    }
-
-                };
-
-                _baseRedisServiceManager.AddQueue(message);
-            }
-
-
             //新进程
             Task.Factory.StartNew(DelayStart, _cancelTokenSource.Token);
 
@@ -102,11 +82,13 @@ namespace WorkData.Service.Application
             {
                 try
                 {
-                    var item = _baseRedisServiceManager.BlockingPopQueue<Message>("RedisKepSpaceQueue", null);
+                    var item = _baseRedisServiceManager.BlockingPopQueue<Message>("RedisKeySpaceQueue", null);
                     // 注意：订阅信道的时候 会开启阻塞模式，所以，需要将监听放到单独的线程里
                     Task.Factory.StartNew(() =>
                     {
-                        _redisSubscriptionManage.CreateRedisSubscription(item);
+                        var subscription= _redisSubscriptionManage.CreateRedisSubscription(item);
+
+                        subscription.CreateRedisSubscription(item);
                     });
                 }
                 catch (Exception ex)

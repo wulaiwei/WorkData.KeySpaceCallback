@@ -1,22 +1,39 @@
-﻿using Autofac;
+﻿// ------------------------------------------------------------------------------
+// Copyright  吴来伟个人 版权所有。 
+// 项目名：WorkData.Service.Application
+// 文件名：WorkDataServiceModule.cs
+// 创建标识：吴来伟 2018-03-20 10:58
+// 创建描述：
+//  
+// 修改标识：吴来伟2018-03-26 17:53
+// 修改描述：
+//  ------------------------------------------------------------------------------
+
+#region
+
+using Autofac;
 using WorkData.Extensions.Modules;
 using WorkData.Extensions.Types;
 using WorkData.Service.Application.Dependency;
 using WorkData.Service.Application.Extensions;
 using WorkData.Service.Application.Impls;
-using WorkData.Service.Core.Entity;
+using WorkData.Service.Core.Bussiness;
 using WorkData.Service.Core.Settings;
 using WorkData.Util.Redis;
+
+#endregion
 
 namespace WorkData.Service.Application
 {
     /// <summary>
-    /// WorkDataServiceModule
-    /// </summary>s
+    ///     WorkDataServiceModule
+    /// </summary>
+    /// s
     [DependsOn(typeof(WorkDataRedisModule))]
     public class WorkDataServiceModule : WorkDataBaseModule
     {
         private readonly ILoadType _loadType;
+
         public WorkDataServiceModule()
         {
             _loadType = NullLoadType.Instance;

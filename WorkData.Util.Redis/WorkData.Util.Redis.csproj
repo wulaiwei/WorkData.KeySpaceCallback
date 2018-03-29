@@ -92,6 +92,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\WorkData.Util.Common\WorkData.Util.Common.csproj">
+      <Project>{7b0cbeb6-f32a-42a3-9be0-d649cb0697d1}</Project>
+      <Name>WorkData.Util.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WorkData\WorkData.csproj">
       <Project>{3cddbd8e-2737-4678-8baf-b0a65465b5ad}</Project>
       <Name>WorkData</Name>

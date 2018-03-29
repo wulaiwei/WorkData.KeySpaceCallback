@@ -77,9 +77,13 @@
     <Compile Include="CallBackService.cs" />
     <Compile Include="Dependency\DomainServiceProxy.cs" />
     <Compile Include="Dependency\IDomainService.cs" />
+    <Compile Include="Dependency\ImmediateSubscription.cs" />
+    <Compile Include="Dependency\IWorkDataSubscription.cs" />
+    <Compile Include="Dependency\TimingWorkDataSubscription.cs" />
     <Compile Include="Extensions\DomainServiceExtensionHelper.cs" />
     <Compile Include="Extensions\RedisSubscriptionManage.cs" />
     <Compile Include="Impls\InsertDomainService.cs" />
+    <Compile Include="Impls\UpdateDomainService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WorkDataServiceModule.cs" />
   </ItemGroup>

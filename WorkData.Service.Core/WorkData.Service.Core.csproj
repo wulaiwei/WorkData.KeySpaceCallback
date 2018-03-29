@@ -41,8 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entity\Insert.cs" />
+    <Compile Include="Bussiness\Insert.cs" />
+    <Compile Include="Bussiness\Update.cs" />
     <Compile Include="Entity\Message.cs" />
+    <Compile Include="Entity\MessageType.cs" />
     <Compile Include="Settings\ICallBack.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings\HandlingResult.cs" />
